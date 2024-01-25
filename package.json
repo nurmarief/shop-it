@@ -5,9 +5,9 @@
   "description": "E-Commerce App Built with MERN Stack",
   "scripts": {
     "start": "node be/index.js",
-    "start:dev": "NODE_ENV=DEVELOPMENT nodemon index.js",
-    "start:prod-test": "NODE_ENV=PRODUCTION nodemon index.js",
-    "populateDb": "node populateDb/index.js"
+    "start:dev": "NODE_ENV=DEVELOPMENT nodemon be/index.js",
+    "start:prod-test": "NODE_ENV=PRODUCTION nodemon be/index.js",
+    "populateDb": "node be/populateDb/index.js"
   },
   "keywords": [],
   "author": "Nur Muhammad Arief Kurniawan <ariefmuhammad897@gmail.com>",
