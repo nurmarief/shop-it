@@ -1,4 +1,5 @@
-import MetaData from './MetaData';
+import { Link } from "react-router-dom";
+import MetaData from "./MetaData";
 
 const NotFound = () => {
   return (
@@ -14,11 +15,11 @@ const NotFound = () => {
           />
         </div>
         <h5 className="text-center">
-          Page Not Found. Go to <a href="/">Homepage</a>
+          Page Not Found. Go to <Link to="/">Homepage</Link>
         </h5>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

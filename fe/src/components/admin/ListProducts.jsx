@@ -1,42 +1,48 @@
-import React, { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
-import Loader from '../layout/Loader';
-import { MDBDataTable } from 'mdbreact';
-import { Link } from 'react-router-dom';
-import MetaData from '../layout/MetaData'
-import { useDeleteProductMutation, useGetAllProductsQuery } from '../../redux/api/products';
-import Admin from '../layout/Admin';
+import React, { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import Loader from "../layout/Loader";
+import { MDBDataTable } from "mdbreact";
+import { Link } from "react-router-dom";
+import MetaData from "../layout/MetaData";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "../../redux/api/products";
+import Admin from "../layout/Admin";
 
 const ListProducts = () => {
   const { data, isLoading, error } = useGetAllProductsQuery();
-  const [deleteProduct, {
-    isSuccess: isDeleteSuccess,
-    isLoading: isDeleteLoading,
-    error: deleteError,
-  }] = useDeleteProductMutation();
+  const [
+    deleteProduct,
+    {
+      isSuccess: isDeleteSuccess,
+      isLoading: isDeleteLoading,
+      error: deleteError,
+    },
+  ] = useDeleteProductMutation();
 
   const setProducts = () => {
     const products = {
       columns: [
         {
-          label: 'ID',
-          field: 'id',
-          sort: 'asc',
+          label: "ID",
+          field: "id",
+          sort: "asc",
         },
         {
-          label: 'Name',
-          field: 'name',
-          sort: 'asc',
+          label: "Name",
+          field: "name",
+          sort: "asc",
         },
         {
-          label: 'Stock',
-          field: 'stock',
-          sort: 'asc',
+          label: "Stock",
+          field: "stock",
+          sort: "asc",
         },
         {
-          label: 'Actions',
-          field: 'actions',
-          sort: 'asc',
+          label: "Actions",
+          field: "actions",
+          sort: "asc",
         },
       ],
       rows: [],
@@ -49,23 +55,29 @@ const ListProducts = () => {
         stock: product?.stock,
         actions: (
           <>
-            <Link to={`/admin/products/${product?._id}`} className="btn btn-outline-primary" >
-              <i className="fa fa-pencil" ></i>
+            <Link
+              to={`/admin/products/${product?._id}`}
+              className="btn btn-outline-primary"
+            >
+              <i className="fa fa-pencil"></i>
             </Link>
-            <Link to={`/admin/products/${product?._id}/upload-images`} className="btn btn-outline-success ms-2" >
-              <i className="fa fa-image" ></i>
+            <Link
+              to={`/admin/products/${product?._id}/upload-images`}
+              className="btn btn-outline-success ms-2"
+            >
+              <i className="fa fa-image"></i>
             </Link>
             <button
               className="btn btn-outline-danger ms-2"
               onClick={() => deleteProductHandler(product._id)}
               disabled={isDeleteLoading}
             >
-              <i className="fa fa-trash" ></i>
+              <i className="fa fa-trash"></i>
             </button>
           </>
-        )
-      })
-    })
+        ),
+      });
+    });
 
     return products;
   };
@@ -77,10 +89,10 @@ const ListProducts = () => {
   useEffect(() => {
     if (error) toast.error(error?.data?.message);
     if (deleteError) toast.error(error?.data?.message);
-    if (isDeleteSuccess) toast.success('Item deleted');
+    if (isDeleteSuccess) toast.success("Item deleted");
   }, [error, deleteError, isDeleteSuccess]);
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -92,13 +104,13 @@ const ListProducts = () => {
             data={setProducts()}
             className="px-3"
             bordered
-            stripped
+            stripped="true"
             hover
           />
         </div>
       </Admin>
     </>
-  )
-}
+  );
+};
 
-export default ListProducts
+export default ListProducts;

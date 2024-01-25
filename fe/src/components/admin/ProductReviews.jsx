@@ -1,50 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Admin from '../layout/Admin';
-import MetaData from '../layout/MetaData';
-import Loader from '../layout/Loader';
-import { MDBDataTable } from 'mdbreact';
-import { toast } from 'react-hot-toast';
+import React, { useState, useEffect } from "react";
+import Admin from "../layout/Admin";
+import MetaData from "../layout/MetaData";
+import Loader from "../layout/Loader";
+import { MDBDataTable } from "mdbreact";
+import { toast } from "react-hot-toast";
 import {
   useDeleteProductReviewMutation,
-  useLazyGetProductReviewsQuery
-} from '../../redux/api/products';
+  useLazyGetProductReviewsQuery,
+} from "../../redux/api/products";
 
 const ProductReviews = () => {
-  const [productId, setProductId] = useState('');
-  const [getProductReview, { data, isLoading, error }] = useLazyGetProductReviewsQuery();
-  const [deleteProductReview, {
-    error: deleteError,
-    isLoading: isDeleteLoading,
-    isSuccess: isDeleteSuccess
-  }] = useDeleteProductReviewMutation();
+  const [productId, setProductId] = useState("");
+  const [getProductReview, { data, isLoading, error }] =
+    useLazyGetProductReviewsQuery();
+  const [
+    deleteProductReview,
+    {
+      error: deleteError,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+    },
+  ] = useDeleteProductReviewMutation();
 
   const setReviews = () => {
     const reviews = {
       columns: [
         {
-          label: 'Review ID',
-          field: 'id',
-          sort: 'asc',
+          label: "Review ID",
+          field: "id",
+          sort: "asc",
         },
         {
-          label: 'Rating',
-          field: 'rating',
-          sort: 'asc',
+          label: "Rating",
+          field: "rating",
+          sort: "asc",
         },
         {
-          label: 'Comment',
-          field: 'comment',
-          sort: 'asc',
+          label: "Comment",
+          field: "comment",
+          sort: "asc",
         },
         {
-          label: 'User',
-          field: 'user',
-          sort: 'asc',
+          label: "User",
+          field: "user",
+          sort: "asc",
         },
         {
-          label: 'Actions',
-          field: 'actions',
-          sort: 'asc',
+          label: "Actions",
+          field: "actions",
+          sort: "asc",
         },
       ],
       rows: [],
@@ -63,12 +67,12 @@ const ProductReviews = () => {
               onClick={() => deleteReviewHandler(review._id)}
               disabled={isDeleteLoading}
             >
-              <i className="fa fa-trash" ></i>
+              <i className="fa fa-trash"></i>
             </button>
           </>
-        )
-      })
-    })
+        ),
+      });
+    });
 
     return reviews;
   };
@@ -76,18 +80,18 @@ const ProductReviews = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     getProductReview(productId);
-  }
+  };
 
   const deleteReviewHandler = (id) => {
     deleteProductReview({ productId, reviewId: id });
-  }
+  };
 
   useEffect(() => {
     if (error || deleteError) toast.error(error?.data?.message);
-    if (isDeleteSuccess) toast.success('Review deleted');
+    if (isDeleteSuccess) toast.success("Review deleted");
   }, [error, deleteError, isDeleteSuccess]);
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -105,7 +109,7 @@ const ProductReviews = () => {
                   id="productId_field"
                   className="form-control"
                   value={productId}
-                  onChange={e => setProductId(e.target.value)}
+                  onChange={(e) => setProductId(e.target.value)}
                 />
               </div>
 
@@ -125,13 +129,15 @@ const ProductReviews = () => {
             data={setReviews()}
             className="px-3"
             bordered
-            stripped
+            stripped="true"
             hover
           />
-        ) : <p className="mt-5 text-center">No Reviews</p>}
+        ) : (
+          <p className="mt-5 text-center">No Reviews</p>
+        )}
       </Admin>
     </>
-  )
-}
+  );
+};
 
-export default ProductReviews
+export default ProductReviews;

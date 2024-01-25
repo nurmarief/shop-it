@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import MetaData from '../layout/MetaData';
-import { useOrderDetailsQuery } from '../../redux/api/orders';
-import { Link, useParams } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import Loader from '../layout/Loader';
+import React, { useEffect } from "react";
+import MetaData from "../layout/MetaData";
+import { useOrderDetailsQuery } from "../../redux/api/orders";
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import Loader from "../layout/Loader";
 
 const OrderDetails = () => {
   const params = useParams();
@@ -25,7 +25,7 @@ const OrderDetails = () => {
     if (error) toast.error(error?.data?.message);
   }, [error]);
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -34,9 +34,12 @@ const OrderDetails = () => {
         <div className="col-12 col-lg-9 mt-5 order-details">
           <div className="d-flex justify-content-between align-items-center">
             <h3 className="mt-5 mb-4">Your Order Details</h3>
-            <a className="btn btn-success" href="/invoice/orders/order-id">
+            <Link
+              className="btn btn-success"
+              to={`/invoice/orders/${params.id}`}
+            >
               <i className="fa fa-print"></i> Invoice
-            </a>
+            </Link>
           </div>
           <table className="table table-striped table-bordered">
             <tbody>
@@ -46,12 +49,20 @@ const OrderDetails = () => {
               </tr>
               <tr>
                 <th scope="row">Status</th>
-                <td className={String(orderStatus).includes('Delivered') ? "greenColor" : "redColor"}>
+                <td
+                  className={
+                    String(orderStatus).includes("Delivered")
+                      ? "greenColor"
+                      : "redColor"
+                  }
+                >
                   <b>{orderStatus}</b>
                 </td>
               </tr>
               <tr>
-                <th scope="row">{new Date(order?.createdAt).toLocaleString('en-us')}</th>
+                <th scope="row">
+                  {new Date(order?.createdAt).toLocaleString("en-us")}
+                </th>
                 <td>October 1, 2023, 10:30 AM</td>
               </tr>
             </tbody>
@@ -70,7 +81,10 @@ const OrderDetails = () => {
               </tr>
               <tr>
                 <th scope="row">Address</th>
-                <td>{shippingInfo?.address}, {shippingInfo?.city}, {shippingInfo?.zipCode}, {shippingInfo?.country}</td>
+                <td>
+                  {shippingInfo?.address}, {shippingInfo?.city},{" "}
+                  {shippingInfo?.zipCode}, {shippingInfo?.country}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -132,7 +146,7 @@ const OrderDetails = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default OrderDetails
+export default OrderDetails;

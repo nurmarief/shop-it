@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import Admin from '../layout/Admin';
-import MetaData from '../layout/MetaData';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Admin from "../layout/Admin";
+import MetaData from "../layout/MetaData";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetUserDetailsForAdminQuery,
-  useUpdateUserMutation
-} from '../../redux/api/users';
-import toast from 'react-hot-toast';
+  useUpdateUserMutation,
+} from "../../redux/api/users";
+import toast from "react-hot-toast";
 
 const UpdateUser = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [role, setRole] = useState('');
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
-  const {
-    isLoading,
-    error,
-    data
-  } = useGetUserDetailsForAdminQuery(params.id);
+  const { isLoading, error, data } = useGetUserDetailsForAdminQuery(params.id);
 
-  const [updateUser, {
-    error: updateError,
-    isSuccess: isUpdateSuccess
-  }] = useUpdateUserMutation();
+  const [updateUser, { error: updateError, isSuccess: isUpdateSuccess }] =
+    useUpdateUserMutation();
 
   useEffect(() => {
     if (data?.user) {
@@ -35,8 +29,8 @@ const UpdateUser = () => {
     }
     if (error || updateError) toast.error(error?.data?.message);
     if (isUpdateSuccess) {
-      toast.success('Update success');
-      navigate('/admin/users')
+      toast.success("Update success");
+      navigate("/admin/users");
     }
   }, [data, error, updateError, isUpdateSuccess]);
 
@@ -44,7 +38,7 @@ const UpdateUser = () => {
     e.preventDefault();
     const updateData = { email, name, role };
     updateUser({ id: params?.id, body: updateData });
-  }
+  };
 
   return (
     <>
@@ -52,14 +46,13 @@ const UpdateUser = () => {
       <Admin>
         <div className="row wrapper">
           <div className="col-10 col-lg-8">
-            <form
-              className="shadow-lg"
-              onSubmit={submitHandler}
-            >
+            <form className="shadow-lg" onSubmit={submitHandler}>
               <h2 className="mb-4">Update User</h2>
 
               <div className="mb-3">
-                <label htmlFor="name_field" className="form-label">Name</label>
+                <label htmlFor="name_field" className="form-label">
+                  Name
+                </label>
                 <input
                   type="name"
                   id="name_field"
@@ -71,7 +64,9 @@ const UpdateUser = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="email_field" className="form-label">Email</label>
+                <label htmlFor="email_field" className="form-label">
+                  Email
+                </label>
                 <input
                   type="email"
                   id="email_field"
@@ -82,7 +77,9 @@ const UpdateUser = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="role_field" className="form-label">Role</label>
+                <label htmlFor="role_field" className="form-label">
+                  Role
+                </label>
                 <select
                   id="role_field"
                   className="form-select"
@@ -103,7 +100,7 @@ const UpdateUser = () => {
         </div>
       </Admin>
     </>
-  )
-}
+  );
+};
 
-export default UpdateUser
+export default UpdateUser;

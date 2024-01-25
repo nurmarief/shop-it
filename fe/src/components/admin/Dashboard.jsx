@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import Admin from '../layout/Admin';
-import DatePicker from 'react-datepicker';
+import React, { useState, useEffect } from "react";
+import Admin from "../layout/Admin";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import SalesChart from '../charts/SalesChart';
-import { useLazyGetDashboardSalesQuery } from '../../redux/api/products';
-import toast from 'react-hot-toast';
-import Loader from '../layout/Loader';
-import MetaData from '../layout/MetaData';
+import SalesChart from "../charts/SalesChart";
+import { useLazyGetDashboardSalesQuery } from "../../redux/api/products";
+import toast from "react-hot-toast";
+import Loader from "../layout/Loader";
+import MetaData from "../layout/MetaData";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date().setDate(1));
   const [endDate, setEndDate] = useState(new Date());
-  const [getDashboardSales, { error, isLoading, data }] = useLazyGetDashboardSalesQuery();
+  const [getDashboardSales, { error, isLoading, data }] =
+    useLazyGetDashboardSalesQuery();
 
   const submitHandler = () => {
     getDashboardSales({
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
     });
-  }
+  };
 
   useEffect(() => {
     if (error) toast.error(error?.data?.message);
@@ -41,7 +42,7 @@ const Dashboard = () => {
             <label className="form-label d-block">Start Date</label>
             <DatePicker
               selected={startDate}
-              onChange={date => setStartDate(date)}
+              onChange={(date) => setStartDate(date)}
               selectsStart
               startDate={startDate}
               endDate={endDate}
@@ -52,7 +53,7 @@ const Dashboard = () => {
             <label className="form-label d-block">End Date</label>
             <DatePicker
               selected={endDate}
-              onChange={date => setEndDate(date)}
+              onChange={(date) => setEndDate(date)}
               selectsEnd
               startDate={startDate}
               endDate={endDate}
@@ -60,7 +61,12 @@ const Dashboard = () => {
               className="form-control"
             />
           </div>
-          <button className="btn fetch-btn ms-4 mt-3 px-5" onClick={submitHandler}>Fetch</button>
+          <button
+            className="btn fetch-btn ms-4 mt-3 px-5"
+            onClick={submitHandler}
+          >
+            Fetch
+          </button>
         </div>
 
         <div className="row pr-4 my-5">
@@ -94,7 +100,7 @@ const Dashboard = () => {
         <div className="mb-5"></div>
       </Admin>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
